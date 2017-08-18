@@ -86,19 +86,19 @@ function scoreUpdate(socket) {
                     return console.error(err);
                 if (user) {
                     if (score == 'o_score') {
-                        Game.update({socket_id: socket.id}, {$inc: {o_score: 1}}, {new : true}, function (err, tank) {
+                        Game.update({socket_id: socket.id}, {$inc: {o_score: 0.5}}, {new : true}, function (err, tank) {
                             if (err)
                                 return console.error(err);
                             console.log(score);
                         });
                     } else if (score == 'x_score') {
-                        Game.update({socket_id: socket.id}, {$inc: {x_score: 1}}, {new : true}, function (err, tank) {
+                        Game.update({socket_id: socket.id}, {$inc: {x_score: 0.5}}, {new : true}, function (err, tank) {
                             if (err)
                                 return console.error(err);
                             console.log(score);
                         });
                     } else {
-                        Game.update({socket_id: socket.id}, {$inc: {draw: 1}}, {new : true}, function (err, tank) {
+                        Game.update({socket_id: socket.id}, {$inc: {draw: 0.5}}, {new : true}, function (err, tank) {
                             if (err)
                                 return console.error(err);
                             console.log(score);
