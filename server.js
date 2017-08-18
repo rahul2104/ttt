@@ -35,17 +35,17 @@ app.get('/', function (req, res) {
 
 
 app.get('/ttt', function (req, res) {
-    var game=new Game({
-        insert_date:new Date(),
-        x_score:0,
-        o_score:0,
-        draw:0,
+    var game = new Game({
+        insert_date: new Date(),
+        x_score: 0,
+        o_score: 0,
+        draw: 0,
     });
     game.save(function (err) {
         if (err)
             return handleError(err);
         //console.log(game);
-        res.redirect('/ttt/'+game._id);
+        res.redirect('/ttt/' + game._id);
     });
     res.sendFile(__dirname + '/ttt.html');
 });
@@ -75,45 +75,59 @@ socket.on('connection', function (socket) {
         //console.log(data);
         socket.broadcast.emit('restart', data);
     });
-    
-    
+
+
 });
-function scoreUpdate(socket){
+function scoreUpdate(socket) {
     socket.on('score', function (score) {
-        if(score){
-        Game.findOne({socket_id: socket.id}, function (err, user) {
-            if (err)
-                return console.error(err);
-            if (user) {
-                Game.update({socket_id: socket.id}, {$inc: {score: 1}}, {new : true}, function (err, tank) {
-                    if (err)
-                        return console.error(err);
-                    console.log(score);
-                });
-            }
-        });
-       }
+        if (score) {
+            Game.findOne({socket_id: socket.id}, function (err, user) {
+                if (err)
+                    return console.error(err);
+                if (user) {
+                    if (score == 'o_score') {
+                        Game.update({socket_id: socket.id}, {$inc: {o_score: 1}}, {new : true}, function (err, tank) {
+                            if (err)
+                                return console.error(err);
+                            console.log(score);
+                        });
+                    } else if (score == 'x_score') {
+                        Game.update({socket_id: socket.id}, {$inc: {x_score: 1}}, {new : true}, function (err, tank) {
+                            if (err)
+                                return console.error(err);
+                            console.log(score);
+                        });
+                    } else {
+                        Game.update({socket_id: socket.id}, {$inc: {draw: 1}}, {new : true}, function (err, tank) {
+                            if (err)
+                                return console.error(err);
+                            console.log(score);
+                        });
+                    }
+                }
+            });
+        }
     });
 }
 function addUser(socket) {
     socket.on('storeClientInfo', function (customId) {
         if (customId) {
             Game.findOne({_id: customId}, function (err, user) {
-            if (err)
-                return console.error(err);
-            //console.log(user.socket_id.length);
-            if(user.socket_id.length<=2){
-            Game.update({_id: customId}, {$push: {socket_id: socket.id}}, {new : true}, function (err, tank) {
                 if (err)
                     return console.error(err);
+                //console.log(user.socket_id.length);
+                if (user.socket_id.length < 2) {
+                    Game.update({_id: customId}, {$push: {socket_id: socket.id}}, {new : true}, function (err, tank) {
+                        if (err)
+                            return console.error(err);
 
-                console.log("socket Id add");
-                //socket.broadcast.emit('online', {id: customId});
+                        console.log("socket Id add");
+                        //socket.broadcast.emit('online', {id: customId});
+                    });
+                } else {
+                    socket.emit('redirect', '/ttt');
+                }
             });
-            }else{
-                socket.emit('redirect', '/ttt');
-            }
-        });
         } else {
             console.log("give user id");
             console.log(customId);

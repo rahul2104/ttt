@@ -77,8 +77,6 @@
                     if (board[x][y] == "") {
                         clearPlayingArea(xCordinate, yCordinate);
                         if (block) {
-
-
                             if (player === 1) {
                                 board[x][y] = -1;
                                 drawX(xCordinate, yCordinate);
