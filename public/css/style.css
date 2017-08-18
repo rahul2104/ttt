@@ -1,0 +1,27 @@
+#tic-tac-toe-board {
+  display: block;
+  margin: 0 auto;
+}
+
+.canvas-wrapper {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 100%;
+}
+
+.canvas-wrapper-parent {
+  -webkit-transform-style: preserver-3d;
+          transform-style: preserver-3d;
+}
+
+.restart_game{
+    position: absolute;
+    top:90%;
+    left: 45%;
+}
+.restart_game button{
+        background-color: #01bBC2;
+        margin-left: 10px;
+}

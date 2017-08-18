@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <meta charset="UTF-8">
+        <title>Tic Tac Toe board using html canvas</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div class="center-wrapper-parent">
+            <div class="canvas-wrapper">
+                <canvas id="tic-tac-toe-board" class="center-v"></canvas>
+            </div>
+            <div class="restart_game">
+                <button type="button" id="restart_game" >Restart Game</button>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>
