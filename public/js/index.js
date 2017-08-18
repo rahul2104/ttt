@@ -17,6 +17,9 @@
        console.log('connect');
         socket.emit('storeClientInfo', page_id);
     });
+    socket.on('redirect', function(destination) {
+    window.location.href = destination;
+});
     socket.on('drawing', addPlayingPiece);
     socket.on('player', function (data) {
         player = data;
@@ -184,6 +187,17 @@
             drawWinLine(10, lineColor, 415, 0, 415, 500);
             //alert("Cross WIN!");   
             TextSmallToBig('Cross WIN!');
+        }
+        var result=1;
+         for (var x = 0; x < 3; x++) {
+            for (var y = 0; y < 3; y++) {
+                if(board[x][y]==""){
+                    result=0;
+                }
+            }
+        }
+        if(result==1){
+            TextSmallToBig('DRAW!');
         }
         //---------------------------------------------------         
     }

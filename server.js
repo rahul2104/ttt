@@ -82,18 +82,17 @@ function addUser(socket) {
             Game.findOne({_id: customId}, function (err, user) {
             if (err)
                 return console.error(err);
-            console.log(user.socket_id.length);
+            //console.log(user.socket_id.length);
             if(user.socket_id.length<=2){
             Game.update({_id: customId}, {$push: {socket_id: socket.id}}, {new : true}, function (err, tank) {
                 if (err)
                     return console.error(err);
 
                 console.log("socket Id add");
-              
                 //socket.broadcast.emit('online', {id: customId});
             });
             }else{
-                res.redirect('/ttt');
+                socket.emit('redirect', '/ttt');
             }
         });
         } else {
@@ -107,8 +106,6 @@ function handleClientDisconnections(socket) {
         Game.findOne({socket_id: socket.id}, function (err, user) {
             if (err)
                 return console.error(err);
-            //console.error('++++');
-            //console.error(user);
             if (user) {
                 Game.update({socket_id: socket.id}, {$pull: {socket_id: socket.id}}, {new : true}, function (err, tank) {
                     if (err)
