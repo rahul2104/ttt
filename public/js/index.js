@@ -5,6 +5,7 @@
     var lineColor = "#ddd";
     var block = 1;
     var canvas = document.getElementById('tic-tac-toe-board');
+    var page_id = document.getElementById('page_id').value;
     var context = canvas.getContext('2d');
     var step = 50, steps = 50;
     var canvasSize = 500;
@@ -12,6 +13,10 @@
     canvas.width = canvasSize;
     canvas.height = canvasSize;
     context.translate(0.5, 0.5);
+   socket.on('connect', function (data) {
+       console.log('connect');
+        socket.emit('storeClientInfo', page_id);
+    });
     socket.on('drawing', addPlayingPiece);
     socket.on('player', function (data) {
         player = data;

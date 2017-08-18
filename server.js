@@ -8,10 +8,18 @@ const io = require('socket.io');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-//mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/ttt');
 //console.log(mongoose.connection.readyState);
 var Friend = require('./models/friend');
 var User = require('./models/user');
+var Game = require('./models/game');
+
+var engine = require('ejs-locals');
+app.engine('ejs', engine);
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({extended: false}));
@@ -27,14 +35,32 @@ app.get('/', function (req, res) {
 
 
 app.get('/ttt', function (req, res) {
+    var game=new Game({
+        insert_date:new Date(),
+        x_score:0,
+        o_score:0,
+        draw:0,
+    });
+    game.save(function (err) {
+        if (err)
+            return handleError(err);
+        //console.log(game);
+        res.redirect('/ttt/'+game._id);
+    });
     res.sendFile(__dirname + '/ttt.html');
+});
+
+app.get('/ttt/:id', function (req, res) {
+    //console.log(req.params.id);
+    //res.sendFile(__dirname + '/ttt');
+    res.render('ttt', {page_id: req.params.id});
 });
 
 socket.on('connection', function (socket) {
     console.log('*** connection ***');
     //socket.broadcast.to(socket.id).emit('connectServer',{ msg:'success'});
-    //handleClientDisconnections(socket);
-    //addUser(socket);
+    handleClientDisconnections(socket);
+    addUser(socket);
     socket.on('drawing', function (data) {
         //console.log(data);
         socket.broadcast.emit('drawing', data);
@@ -53,14 +79,23 @@ socket.on('connection', function (socket) {
 function addUser(socket) {
     socket.on('storeClientInfo', function (customId) {
         if (customId) {
-            User.findByIdAndUpdate(customId, {$push: {socketId: socket.id}}, {new : true}, function (err, tank) {
+            Game.findOne({_id: customId}, function (err, user) {
+            if (err)
+                return console.error(err);
+            console.log(user.socket_id.length);
+            if(user.socket_id.length<=2){
+            Game.update({_id: customId}, {$push: {socket_id: socket.id}}, {new : true}, function (err, tank) {
                 if (err)
                     return console.error(err);
-                console.log(socket.id);
+
                 console.log("socket Id add");
-                console.log(customId);
-                socket.broadcast.emit('online', {id: customId});
+              
+                //socket.broadcast.emit('online', {id: customId});
             });
+            }else{
+                res.redirect('/ttt');
+            }
+        });
         } else {
             console.log("give user id");
             console.log(customId);
@@ -69,13 +104,13 @@ function addUser(socket) {
 }
 function handleClientDisconnections(socket) {
     socket.on('disconnect', function () {
-        User.findOne({socketId: socket.id}, function (err, user) {
+        Game.findOne({socket_id: socket.id}, function (err, user) {
             if (err)
                 return console.error(err);
             //console.error('++++');
             //console.error(user);
             if (user) {
-                User.update({socketId: socket.id}, {$pull: {socketId: socket.id}}, {new : true}, function (err, tank) {
+                Game.update({socket_id: socket.id}, {$pull: {socket_id: socket.id}}, {new : true}, function (err, tank) {
                     if (err)
                         return console.error(err);
                     console.log('user disconnected');

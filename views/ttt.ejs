@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <input type="hidden" value="" id="page_id">
+        <input type="hidden" value="<%=page_id %>" id="page_id">
         <div class="center-wrapper-parent">
             <div class="canvas-wrapper">
                 <canvas id="tic-tac-toe-board" class="center-v"></canvas>
@@ -23,9 +23,10 @@
         <script>
 
             //var socket = io.connect('52.9.243.92:8091');
-            socket.on('connect', function (data) {
+        /*    socket.on('connect', function (data) {
               socket.emit('storeClientInfo', '577d127dc66b150c678b4567');
-          });
+          });*/
         </script>
     </body>
 </html>
+
