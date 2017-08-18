@@ -61,6 +61,7 @@ socket.on('connection', function (socket) {
     //socket.broadcast.to(socket.id).emit('connectServer',{ msg:'success'});
     handleClientDisconnections(socket);
     addUser(socket);
+    scoreUpdate(socket);
     socket.on('drawing', function (data) {
         //console.log(data);
         socket.broadcast.emit('drawing', data);
@@ -74,8 +75,26 @@ socket.on('connection', function (socket) {
         //console.log(data);
         socket.broadcast.emit('restart', data);
     });
+    
+    
 });
-
+function scoreUpdate(socket){
+    socket.on('score', function (score) {
+        if(score){
+        Game.findOne({socket_id: socket.id}, function (err, user) {
+            if (err)
+                return console.error(err);
+            if (user) {
+                Game.update({socket_id: socket.id}, {$inc: {score: 1}}, {new : true}, function (err, tank) {
+                    if (err)
+                        return console.error(err);
+                    console.log(score);
+                });
+            }
+        });
+       }
+    });
+}
 function addUser(socket) {
     socket.on('storeClientInfo', function (customId) {
         if (customId) {
