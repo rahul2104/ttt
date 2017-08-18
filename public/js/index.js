@@ -103,26 +103,26 @@
             drawWinLine(10, lineColor, 0, 0, 500, 500);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[0][0] + board[1][1] + board[2][2] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 0, 500, 500);
             //alert("Cross WIN!");
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
         if (board[2][0] + board[1][1] + board[0][2] === 3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 500, 500, 0);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[2][0] + board[1][1] + board[0][2] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 500, 500, 0);
             //alert("Cross WIN!");
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
         //---------------------------------------------------
         if (board[0][0] + board[1][0] + board[2][0] === 3) {
@@ -130,39 +130,39 @@
             drawWinLine(10, lineColor, 0, 84, 500, 84);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[0][0] + board[1][0] + board[2][0] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 84, 500, 84);
             //alert("Cross WIN!");
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
         if (board[0][1] + board[1][1] + board[2][1] === 3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 250, 500, 250);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[0][1] + board[1][1] + board[2][1] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 250, 500, 250);
             //alert("Cross WIN!");
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
         if (board[0][2] + board[1][2] + board[2][2] === 3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 415, 500, 415);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[0][2] + board[1][2] + board[2][2] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 0, 415, 500, 415);
             //alert("Cross WIN!");  
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
 //------------------------------------------------------
         if (board[0][0] + board[0][1] + board[0][2] === 3) {
@@ -170,39 +170,39 @@
             drawWinLine(10, lineColor, 84, 0, 84, 500);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[0][0] + board[0][1] + board[0][2] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 84, 0, 84, 500);
             //alert("Cross WIN!"); 
             TextSmallToBig('Cross WIN!');
-           socket.emit('x_win', 'x_score');
+           socket.emit('score', 'x_score');
         }
         if (board[1][0] + board[1][1] + board[1][2] === 3) {
             block = 0;
             drawWinLine(10, lineColor, 250, 0, 250, 500);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[1][0] + board[1][1] + board[1][2] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 250, 0, 250, 500);
             //alert("Cross WIN!");   
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
         if (board[2][0] + board[2][1] + board[2][2] === 3) {
             block = 0;
             drawWinLine(10, lineColor, 415, 0, 415, 500);
             //alert("Circle WIN!");
             TextSmallToBig('Circle WIN!');
-            socket.emit('o_win', 'o_score');
+            socket.emit('score', 'o_score');
         } else if (board[2][0] + board[2][1] + board[2][2] === -3) {
             block = 0;
             drawWinLine(10, lineColor, 415, 0, 415, 500);
             //alert("Cross WIN!");   
             TextSmallToBig('Cross WIN!');
-            socket.emit('x_win', 'x_score');
+            socket.emit('score', 'x_score');
         }
         var result=1;
          for (var x = 0; x < 3; x++) {
